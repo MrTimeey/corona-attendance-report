@@ -2,6 +2,7 @@ version: '3.7'
 
 services:
   mongo-db:
+    container_name: mongoDB
     image: bitnami/mongodb:${MONGO_VERSION:-latest}
     ports:
       - 27017:27017

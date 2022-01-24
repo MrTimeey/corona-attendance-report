@@ -7,3 +7,10 @@ keycloak:
   bearer-only: true
   credentials:
     secret: '{cipher}dc8179044078e89631d8ecdce758cb6be756af472c748fa7d063e97433599ebd89b5015c205de2bba88e7dd37f3ed4d209f28d532ae33f80d7f8f6f6e5323578'
+spring:
+  data:
+    mongodb:
+      host: localhost
+      username: mongouser
+      password: '{cipher}77a673a9ba1d91fe47c77ad4840ea3fc35b2ebd4d19af5962994e1b28315be49'
+      database: corona_attendance_report
