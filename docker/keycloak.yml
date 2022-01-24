@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 
 services:
   postgres:
@@ -13,6 +13,8 @@ services:
     volumes:
       - ./db-init-scripts:/docker-entrypoint-initdb.d
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - ${GLOBAL_NETWORK:-keycloak}
       
   keycloak:
     container_name: keycloak
@@ -33,6 +35,8 @@ services:
       - ./realm.json:/tmp/realm.json
     depends_on:
       - postgres
+    networks:
+      - ${GLOBAL_NETWORK:-keycloak}
 
 volumes:
   postgres_data:
