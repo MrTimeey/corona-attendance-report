@@ -1,0 +1,9 @@
+keycloak:
+  realm: corona-attendance-report
+  auth-server-url: http://localhost:8088/auth
+  ssl-required: external
+  resource: corona-attendance-report-server
+  use-resource-role-mappings: true
+  bearer-only: true
+  credentials:
+    secret: '{cipher}dc8179044078e89631d8ecdce758cb6be756af472c748fa7d063e97433599ebd89b5015c205de2bba88e7dd37f3ed4d209f28d532ae33f80d7f8f6f6e5323578'
