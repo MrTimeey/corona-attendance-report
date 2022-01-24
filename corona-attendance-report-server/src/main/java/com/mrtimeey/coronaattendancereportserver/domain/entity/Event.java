@@ -8,6 +8,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.lang.NonNull;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +24,27 @@ public class Event {
     @NotNull
     private String teamId;
 
+    private String name;
+
+    private String startTime;
+
+    private String endTime;
+
+    @Builder.Default
+    private LocalDate date = LocalDate.now();
+
+    @Builder.Default
+    private EventStatus status = EventStatus.CREATED;
+
     @NotNull
     @Singular
     private List<EventParticipant> participants;
-    
+
+    @Builder.Default
+    private LocalDateTime created = LocalDateTime.now();
+
+    private LocalDateTime released;
+
+    private LocalDateTime sent;
+
 }
