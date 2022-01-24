@@ -221,7 +221,13 @@
 					"name": "Test Anonym",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Access",
+								"value": "",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "http://localhost:8089/test/anonymous",
 							"protocol": "http",
