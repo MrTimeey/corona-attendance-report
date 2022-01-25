@@ -12,5 +12,5 @@ spring:
     mongodb:
       host: localhost
       username: mongouser
-      password: '{cipher}77a673a9ba1d91fe47c77ad4840ea3fc35b2ebd4d19af5962994e1b28315be49'
+      password: <set-value-through-vm-options>
       database: corona_attendance_report

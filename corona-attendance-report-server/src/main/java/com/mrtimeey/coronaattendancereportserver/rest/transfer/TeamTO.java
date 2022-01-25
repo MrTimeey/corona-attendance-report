@@ -10,6 +10,7 @@ import lombok.Singular;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -27,11 +28,11 @@ public class TeamTO {
 
     private String defaultEndTime = "";
 
-    @Singular
-    private List<String> mailTargets;
+    @Builder.Default
+    private List<String> mailTargets = new ArrayList<>();
 
-    @Singular
-    private List<String> members;
+    @Builder.Default
+    private List<String> members = new ArrayList<>();
 
     public static TeamTO fromBusinessModel(Team team) {
         return TeamTO.builder()

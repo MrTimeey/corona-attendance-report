@@ -6,6 +6,9 @@ import com.mrtimeey.coronaattendancereportserver.rest.transfer.TeamTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Optional;
+
 @Component
 @RequiredArgsConstructor
 public class TeamService {
@@ -15,12 +18,17 @@ public class TeamService {
     public TeamTO createTeam(TeamTO teamTO) {
         Team team = Team.builder()
                 .name(teamTO.getName())
-                .defaultStartTime(teamTO.getDefaultStartTime())
-                .defaultEndTime(teamTO.getDefaultEndTime())
-                .mailTargets(teamTO.getMailTargets())
-                .members(teamTO.getMembers())
+                .defaultStartTime(teamTO.getDefaultStartTime() == null ? "" : teamTO.getDefaultStartTime())
+                .defaultEndTime(teamTO.getDefaultEndTime() == null ? "" : teamTO.getDefaultEndTime())
+                .mailTargets(teamTO.getMailTargets() == null ? new ArrayList<>() : teamTO.getMailTargets())
+                .members(teamTO.getMembers() == null ? new ArrayList<>() : teamTO.getMembers())
                 .build();
         return TeamTO.fromBusinessModel(teamRepository.save(team));
+    }
+
+    public Optional<TeamTO> getTeam(String teamId) {
+        return teamRepository.findById(teamId)
+                .map(TeamTO::fromBusinessModel);
     }
 
 }
