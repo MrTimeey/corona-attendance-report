@@ -158,86 +158,119 @@
 			"name": "Server",
 			"item": [
 				{
-					"name": "Test User",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8089/test/user",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8089",
-							"path": [
-								"test",
-								"user"
-							]
+					"name": "Test",
+					"item": [
+						{
+							"name": "Test User",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8089/test/user",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8089",
+									"path": [
+										"test",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Test Admin",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8089/test/admin",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8089",
+									"path": [
+										"test",
+										"admin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Test All User",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8089/test/all-user",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8089",
+									"path": [
+										"test",
+										"all-user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Test Anonym",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Access",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8089/test/anonymous",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8089",
+									"path": [
+										"test",
+										"anonymous"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "Test Admin",
+					"name": "Create Team",
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
-						"url": {
-							"raw": "http://localhost:8089/test/admin",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8089",
-							"path": [
-								"test",
-								"admin"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Test All User",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8089/test/all-user",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8089",
-							"path": [
-								"test",
-								"all-user"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Test Anonym",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Access",
-								"value": "",
-								"type": "text"
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"TSV Uesen\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
 							}
-						],
+						},
 						"url": {
-							"raw": "http://localhost:8089/test/anonymous",
+							"raw": "http://localhost:8089/teams",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8089",
 							"path": [
-								"test",
-								"anonymous"
+								"teams"
 							]
 						}
 					},
