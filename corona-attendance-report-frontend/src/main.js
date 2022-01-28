@@ -5,7 +5,6 @@ import App from './App.vue';
 
 Vue.config.productionTip = false;
 
-axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 axios.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('vue-token');
@@ -25,32 +24,34 @@ const initOptions = {
 
 const keycloak = Keycloak(initOptions);
 
-keycloak.init({ onLoad: initOptions.onLoad }).success((auth) => {
-  if (!auth) {
-    window.location.reload();
-  } else {
-    console.log('Authenticated');
-  }
+keycloak.init({ onLoad: initOptions.onLoad })
+  .then((auth) => {
+    if (!auth) {
+      window.location.reload();
+    } else {
+      console.log('Authenticated');
+    }
 
-  new Vue({
-    render: (h) => h(App),
-  }).$mount('#app');
+    new Vue({
+      render: (h) => h(App),
+    }).$mount('#app');
 
-  localStorage.setItem('vue-token', keycloak.token);
-  localStorage.setItem('vue-refresh-token', keycloak.refreshToken);
+    // Move to VUEX
+    localStorage.setItem('vue-token', keycloak.token);
 
-  setInterval(() => {
-    keycloak.updateToken(70).success((refreshed) => {
-      if (refreshed) {
-        console.log(`Token refreshed${refreshed}`);
-      } else {
-        console.log(`Token not refreshed, valid for ${
-          Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000)} seconds`);
-      }
-    }).catch(() => {
-      console.error('Failed to refresh token');
-    });
-  }, 60000);
-}).catch(() => {
-  console.error('Authenticated Failed');
-});
+    setInterval(() => {
+      keycloak.updateToken(70)
+        .then((refreshed) => {
+          if (refreshed) {
+            console.log(`Token refreshed${refreshed}`);
+          } else {
+            console.log(`Token not refreshed, valid for ${
+              Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000)} seconds`);
+          }
+        }).catch(() => {
+          console.error('Failed to refresh token');
+        });
+    }, 60000);
+  }).catch(() => {
+    console.error('Authenticated Failed');
+  });
