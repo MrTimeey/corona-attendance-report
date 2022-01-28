@@ -354,6 +354,7 @@
           "attributes": {}
         }
       ],
+      "corona-attendance-report-frontend": [],
       "security-admin-console": [],
       "admin-cli": [],
       "account-console": [],
@@ -497,8 +498,8 @@
   "webAuthnPolicyPasswordlessAcceptableAaguids": [],
   "users": [
     {
-      "id": "f80fda25-97bd-467a-b804-070e8b55ba87",
-      "createdTimestamp": 1642978953855,
+      "id": "cd51057e-7bc2-4675-9b04-5cfd7b60fd88",
+      "createdTimestamp": 1643353703031,
       "username": "service-account-corona-attendance-report-server",
       "enabled": true,
       "totp": false,
@@ -706,6 +707,72 @@
       ]
     },
     {
+      "id": "450ade40-653d-4324-b06d-2f9c8f5d377e",
+      "clientId": "corona-attendance-report-frontend",
+      "rootUrl": "http://localhost:8080",
+      "adminUrl": "http://localhost:8080",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "alwaysDisplayInConsole": false,
+      "clientAuthenticatorType": "client-secret",
+      "redirectUris": [
+        "http://localhost:8080/*"
+      ],
+      "webOrigins": [
+        "http://localhost:8080"
+      ],
+      "notBefore": 0,
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "publicClient": true,
+      "frontchannelLogout": false,
+      "protocol": "openid-connect",
+      "attributes": {
+        "saml.assertion.signature": "false",
+        "id.token.as.detached.signature": "false",
+        "saml.multivalued.roles": "false",
+        "saml.force.post.binding": "false",
+        "saml.encrypt": "false",
+        "login_theme": "keycloak",
+        "oauth2.device.authorization.grant.enabled": "false",
+        "backchannel.logout.revoke.offline.tokens": "false",
+        "saml.server.signature": "false",
+        "saml.server.signature.keyinfo.ext": "false",
+        "use.refresh.tokens": "true",
+        "exclude.session.state.from.auth.response": "false",
+        "oidc.ciba.grant.enabled": "false",
+        "saml.artifact.binding": "false",
+        "backchannel.logout.session.required": "true",
+        "client_credentials.use_refresh_token": "false",
+        "saml_force_name_id_format": "false",
+        "saml.client.signature": "false",
+        "tls.client.certificate.bound.access.tokens": "false",
+        "require.pushed.authorization.requests": "false",
+        "saml.authnstatement": "false",
+        "display.on.consent.screen": "false",
+        "saml.onetimeuse.condition": "false"
+      },
+      "authenticationFlowBindingOverrides": {},
+      "fullScopeAllowed": true,
+      "nodeReRegistrationTimeout": -1,
+      "defaultClientScopes": [
+        "web-origins",
+        "profile",
+        "roles",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access",
+        "microprofile-jwt"
+      ]
+    },
+    {
       "id": "783ab8c7-600e-4b9e-ba10-0794fcf9eeac",
       "clientId": "corona-attendance-report-server",
       "rootUrl": "http://localhost:8089",
@@ -824,7 +891,7 @@
             "type": "urn:corona-attendance-report-server:resources:default",
             "ownerManagedAccess": false,
             "attributes": {},
-            "_id": "a8e20867-d815-42a1-af5b-5d340e97dd31",
+            "_id": "af148d02-ba35-42fc-811d-04b432808e9c",
             "uris": [
               "/*"
             ]
@@ -832,7 +899,7 @@
         ],
         "policies": [
           {
-            "id": "7f7a911e-c28b-4caf-b4bc-99af0490428d",
+            "id": "2771d11b-241c-4fff-94f0-d478b9838c53",
             "name": "Default Policy",
             "description": "A policy that grants access only for users within this realm",
             "type": "js",
@@ -843,7 +910,7 @@
             }
           },
           {
-            "id": "c456dad8-64f5-4e79-b7ab-759e98a6e4c6",
+            "id": "f5f2a223-ee8c-4212-893e-7d5ebee53d8c",
             "name": "Default Permission",
             "description": "A permission that applies to the default resource type",
             "type": "resource",
