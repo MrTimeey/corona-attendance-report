@@ -46,7 +46,7 @@
 								},
 								{
 									"key": "client_secret",
-									"value": "hwISc8MYXOINerlBLTCBNYSKoI1Sifhz",
+									"value": "7DL3bOou3eT7xvSQC81DtXAKN7F7C5hd",
 									"type": "text"
 								},
 								{
@@ -118,7 +118,7 @@
 								},
 								{
 									"key": "client_secret",
-									"value": "hwISc8MYXOINerlBLTCBNYSKoI1Sifhz",
+									"value": "7DL3bOou3eT7xvSQC81DtXAKN7F7C5hd",
 									"type": "text"
 								},
 								{
@@ -262,6 +262,25 @@
 								}
 							}
 						},
+						"url": {
+							"raw": "http://localhost:8089/teams",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"teams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Team List",
+					"request": {
+						"method": "GET",
+						"header": [],
 						"url": {
 							"raw": "http://localhost:8089/teams",
 							"protocol": "http",
