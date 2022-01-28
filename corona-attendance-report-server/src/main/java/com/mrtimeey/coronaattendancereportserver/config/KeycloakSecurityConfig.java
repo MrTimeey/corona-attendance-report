@@ -1,7 +1,5 @@
 package com.mrtimeey.coronaattendancereportserver.config;
 
-import org.keycloak.adapters.KeycloakConfigResolver;
-import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +26,8 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
                 .antMatchers("/test/anonymous").permitAll()
                 .antMatchers("/test/user").hasAnyRole("user")
                 .antMatchers("/test/admin").hasAnyRole("admin")
-                .antMatchers("/test/all-user").hasAnyRole("user","admin")
+                .antMatchers("/test/all-user").hasAnyRole("user", "admin")
+                .antMatchers("/teams/*").hasAnyRole("user", "admin")
                 .anyRequest()
                 .permitAll();
         http.csrf().disable();
@@ -46,5 +45,6 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
     protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
         return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
     }
+
 
 }

@@ -7,7 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -31,4 +33,9 @@ public class TeamService {
                 .map(TeamTO::fromBusinessModel);
     }
 
+    public List<TeamTO> getTeamList() {
+        return teamRepository.findAll().stream()
+                .map(TeamTO::fromBusinessModel)
+                .collect(Collectors.toList());
+    }
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Validated
 @RestController
@@ -35,6 +36,11 @@ public class TeamController {
         return teamService.getTeam(teamId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<TeamTO>> getTeams() {
+        return ResponseEntity.ok(teamService.getTeamList());
     }
 
 }

@@ -5,8 +5,9 @@ keycloak:
   resource: corona-attendance-report-server
   use-resource-role-mappings: true
   bearer-only: true
+  cors: true
   credentials:
-    secret: '{cipher}dc8179044078e89631d8ecdce758cb6be756af472c748fa7d063e97433599ebd89b5015c205de2bba88e7dd37f3ed4d209f28d532ae33f80d7f8f6f6e5323578'
+    secret: '{cipher}0e4119e89029a85cb07b7381c66f4008a9a5a1fcbee8557bb8110b0347adfdb5f4df906f00350de35d3f763f22c5ccb8304c6f6be17f620ebcd7c1d148f619ca'
 spring:
   data:
     mongodb:
