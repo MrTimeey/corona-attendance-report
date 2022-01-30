@@ -24,7 +24,7 @@ public class TeamService {
 
     public TeamTO updateTeam(TeamTO teamTO) {
 
-        if (!teamRepository.existsById(teamTO.getId())) {
+        if (!teamExisting(teamTO.getId())) {
             throw new ResourceNotFoundException(String.format("Team with id '%s' not found!", teamTO.getId()));
         }
         Team team = Team.fromTransferObject(teamTO);
@@ -49,5 +49,9 @@ public class TeamService {
 
     public void deleteAll() {
         teamRepository.deleteAll();
+    }
+
+    public boolean teamExisting(String teamId) {
+        return teamRepository.existsById(teamId);
     }
 }

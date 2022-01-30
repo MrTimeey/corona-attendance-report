@@ -1,16 +1,15 @@
 package com.mrtimeey.coronaattendancereportserver.domain.entity;
 
+import com.mrtimeey.coronaattendancereportserver.rest.transfer.EventTO;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Singular;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.lang.NonNull;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -30,8 +29,8 @@ public class Event {
 
     private String endTime;
 
-    @Builder.Default
-    private LocalDate date = LocalDate.now();
+    @NotNull
+    private LocalDate date;
 
     @Builder.Default
     private EventStatus status = EventStatus.CREATED;
@@ -47,4 +46,19 @@ public class Event {
 
     private LocalDateTime sent;
 
+    public static Event fromTransferObject(EventTO eventTO) {
+        return Event.builder()
+                .id(eventTO.getId())
+                .teamId(eventTO.getTeamId())
+                .name(eventTO.getName())
+                .startTime(eventTO.getStartTime())
+                .endTime(eventTO.getEndTime())
+                .date(eventTO.getDate())
+                .status(eventTO.getStatus())
+                .participants(eventTO.getParticipants())
+                .created(eventTO.getCreated())
+                .released(eventTO.getReleased())
+                .sent(eventTO.getSent())
+                .build();
+    }
 }
