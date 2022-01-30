@@ -35,6 +35,10 @@ public class PersonService {
                 .map(PersonTO::fromBusinessModel);
     }
 
+    public boolean personExists(String personId) {
+        return personRepository.existsById(personId);
+    }
+
     public void deletePerson(String personId) {
         personRepository.findById(personId)
                 .ifPresent(personRepository::delete);

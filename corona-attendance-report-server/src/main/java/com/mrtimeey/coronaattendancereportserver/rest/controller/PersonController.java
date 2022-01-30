@@ -35,7 +35,7 @@ public class PersonController {
     @Validated(OnCreate.class)
     @PostMapping
     public ResponseEntity<PersonTO> createPerson(@RequestBody @Valid PersonTO personTO) {
-        return ResponseEntity.ok(personService.createPerson(personTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(personService.createPerson(personTO));
     }
 
     @Validated(OnUpdate.class)

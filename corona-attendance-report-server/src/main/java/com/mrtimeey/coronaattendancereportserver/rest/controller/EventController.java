@@ -34,7 +34,7 @@ public class EventController {
     @Validated(OnCreate.class)
     @PostMapping
     public ResponseEntity<EventTO> createEvent(@Valid @RequestBody EventTO eventTO) {
-        return ResponseEntity.ok(eventService.createEvent(eventTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(eventService.createEvent(eventTO));
     }
 
     @Validated(OnUpdate.class)

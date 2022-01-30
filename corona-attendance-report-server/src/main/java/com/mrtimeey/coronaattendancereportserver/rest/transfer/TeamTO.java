@@ -12,10 +12,12 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
-@Builder
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 public class TeamTO {
@@ -35,7 +37,7 @@ public class TeamTO {
     private List<String> mailTargets = new ArrayList<>();
 
     @Builder.Default
-    private List<String> members = new ArrayList<>();
+    private Set<String> members = new HashSet<>();
 
     public static TeamTO fromBusinessModel(Team team) {
         return TeamTO.builder()

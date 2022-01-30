@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Validated
@@ -34,7 +35,7 @@ public class TeamController {
     @Validated(OnCreate.class)
     @PostMapping
     public ResponseEntity<TeamTO> createTeam(@RequestBody @Valid TeamTO teamTO) {
-        return ResponseEntity.ok(teamService.createTeam(teamTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(teamService.createTeam(teamTO));
     }
 
     @Validated(OnUpdate.class)
@@ -48,6 +49,12 @@ public class TeamController {
         return teamService.getTeam(teamId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @Validated
+    @PostMapping(value = "/{teamId}/members")
+    public ResponseEntity<TeamTO> addMember(@PathVariable String teamId, @RequestBody @NotEmpty List<String> membersToAdd) {
+        return ResponseEntity.ok(teamService.addMemberList(teamId, membersToAdd));
     }
 
     @GetMapping

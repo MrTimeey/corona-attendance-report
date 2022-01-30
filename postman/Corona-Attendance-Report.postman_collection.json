@@ -845,6 +845,54 @@
 					]
 				},
 				{
+					"name": "Integrate",
+					"item": [
+						{
+							"name": "Add members to Team",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();\r",
+											"pm.collectionVariables.set(\"eventId\", jsonData.id);\r",
+											"pm.collectionVariables.set(\"eventCreated\", jsonData.created);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n    \"{{personId_max}}\",\r\n    \"{{personId_erika}}\"\r\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8089/teams/{{teamId}}/members",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8089",
+									"path": [
+										"teams",
+										"{{teamId}}",
+										"members"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Delete Everything",
 					"request": {
 						"method": "DELETE",

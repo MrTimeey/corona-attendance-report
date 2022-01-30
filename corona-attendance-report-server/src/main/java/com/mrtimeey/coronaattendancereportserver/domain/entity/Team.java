@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -34,7 +35,7 @@ public class Team {
 
     @NotNull
     @Singular
-    private List<String> members;
+    private Set<String> members;
 
     public static Team fromTransferObject(TeamTO teamTO) {
         return Team.builder()
