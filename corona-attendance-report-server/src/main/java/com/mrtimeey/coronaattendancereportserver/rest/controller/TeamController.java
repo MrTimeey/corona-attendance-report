@@ -8,10 +8,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -27,36 +30,36 @@ public class TeamController {
     private final TeamService teamService;
 
     @Validated(OnCreate.class)
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public ResponseEntity<TeamTO> createTeam(@RequestBody @Valid TeamTO teamTO) {
         return ResponseEntity.ok(teamService.createTeam(teamTO));
     }
 
     @Validated(OnUpdate.class)
-    @RequestMapping(method = RequestMethod.PATCH)
+    @PatchMapping
     public ResponseEntity<TeamTO> updateTeam(@RequestBody @Valid TeamTO teamTO) {
         return ResponseEntity.ok(teamService.updateTeam(teamTO));
     }
 
-    @RequestMapping(value = "/{teamId}", method = RequestMethod.GET)
+    @GetMapping(value = "/{teamId}")
     public ResponseEntity<TeamTO> getTeam(@PathVariable String teamId) {
         return teamService.getTeam(teamId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity<List<TeamTO>> getTeams() {
         return ResponseEntity.ok(teamService.getTeamList());
     }
 
-    @RequestMapping(value = "/{teamId}", method = RequestMethod.GET)
+    @DeleteMapping(value = "/{teamId}")
     public ResponseEntity<TeamTO> deleteTeam(@PathVariable String teamId) {
         teamService.deleteTeam(teamId);
         return ResponseEntity.ok().build();
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
+    @DeleteMapping
     public ResponseEntity<Void> deleteAllTeams() {
         teamService.deleteAll();
         return ResponseEntity.ok().build();

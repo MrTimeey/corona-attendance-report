@@ -158,89 +158,149 @@
 			"name": "Server",
 			"item": [
 				{
-					"name": "Test",
+					"name": "Team",
 					"item": [
 						{
-							"name": "Test User",
+							"name": "Get Team List",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8089/test/user",
+									"raw": "http://localhost:8089/teams",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "8089",
 									"path": [
-										"test",
-										"user"
+										"teams"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "Test Admin",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8089/test/admin",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8089",
-									"path": [
-										"test",
-										"admin"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Test All User",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8089/test/all-user",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8089",
-									"path": [
-										"test",
-										"all-user"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Test Anonym",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Access",
-										"value": "",
-										"type": "text"
+							"name": "Create Team",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();\r",
+											"pm.collectionVariables.set(\"teamId\", jsonData.id);"
+										],
+										"type": "text/javascript"
 									}
-								],
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"TSV Uesen\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
-									"raw": "http://localhost:8089/test/anonymous",
+									"raw": "http://localhost:8089/teams",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "8089",
 									"path": [
-										"test",
-										"anonymous"
+										"teams"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Team",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"{{teamId}}\",\r\n    \"name\": \"TSV Uesen e.V.\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8089/teams",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8089",
+									"path": [
+										"teams"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Team",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8089/teams/{{teamId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8089",
+									"path": [
+										"teams",
+										"{{teamId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Team",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8089/teams/{{teamId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8089",
+									"path": [
+										"teams",
+										"{{teamId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete All Teams",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8089/teams",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8089",
+									"path": [
+										"teams"
 									]
 								}
 							},
@@ -249,51 +309,373 @@
 					]
 				},
 				{
-					"name": "Create Team",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"TSV Uesen\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+					"name": "Person",
+					"item": [
+						{
+							"name": "Get Person List",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8089/persons",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8089",
+									"path": [
+										"persons"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "http://localhost:8089/teams",
-							"protocol": "http",
-							"host": [
-								"localhost"
+						{
+							"name": "Create Person: Max",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();\r",
+											"pm.collectionVariables.set(\"personId_max\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
 							],
-							"port": "8089",
-							"path": [
-								"teams"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Team List",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8089/teams",
-							"protocol": "http",
-							"host": [
-								"localhost"
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Max Mustermann\",\r\n    \"phoneNumber\": \"01234 567890\",\r\n    \"address\": \"Musterstrasse 1, 12345 Musterstadt\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8089/persons",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8089",
+									"path": [
+										"persons"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Person: Max",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();\r",
+											"pm.collectionVariables.set(\"personId_max\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
 							],
-							"port": "8089",
-							"path": [
-								"teams"
-							]
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"{{personId_max}}\",\r\n    \"name\": \"Max Mustermann\",\r\n    \"phoneNumber\": \"01234 56789\",\r\n    \"address\": \"Musterstrasse 1, 12345 Musterstadt\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8089/persons",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8089",
+									"path": [
+										"persons"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Person: Max",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Max Mustermann\",\r\n    \"phoneNumber\": \"01234 567890\",\r\n    \"address\": \"Musterstrasse 1, 12345 Musterstadt\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8089/persons/{{personId_max}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8089",
+									"path": [
+										"persons",
+										"{{personId_max}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Person: Max",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Max Mustermann\",\r\n    \"phoneNumber\": \"01234 567890\",\r\n    \"address\": \"Musterstrasse 1, 12345 Musterstadt\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8089/persons/{{personId_max}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8089",
+									"path": [
+										"persons",
+										"{{personId_max}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Person: Erika",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();\r",
+											"pm.collectionVariables.set(\"personId_erika\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Erika Mustermann\",\r\n    \"phoneNumber\": \"01234 098765\",\r\n    \"address\": \"Münchener Heidestraße 17, 12345 Musterstadt\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8089/persons",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8089",
+									"path": [
+										"persons"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Person: Erika",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();\r",
+											"pm.collectionVariables.set(\"personId_erika\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"{{personId_erika}}\",\r\n    \"name\": \"Erika Mustermann\",\r\n    \"phoneNumber\": \"01234 98765\",\r\n    \"address\": \"Münchener Heidestraße 17, 12345 Musterstadt\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8089/persons",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8089",
+									"path": [
+										"persons"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Person: Erika",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Max Mustermann\",\r\n    \"phoneNumber\": \"01234 567890\",\r\n    \"address\": \"Musterstrasse 1, 12345 Musterstadt\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8089/persons/{{personId_erika}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8089",
+									"path": [
+										"persons",
+										"{{personId_erika}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Person: Erika",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Max Mustermann\",\r\n    \"phoneNumber\": \"01234 567890\",\r\n    \"address\": \"Musterstrasse 1, 12345 Musterstadt\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8089/persons/{{personId_erika}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8089",
+									"path": [
+										"persons",
+										"{{personId_erika}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete All Persons",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8089/persons",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8089",
+									"path": [
+										"persons"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				}
 			],
 			"auth": {
@@ -331,6 +713,18 @@
 	"variable": [
 		{
 			"key": "current_token",
+			"value": ""
+		},
+		{
+			"key": "teamId",
+			"value": ""
+		},
+		{
+			"key": "personId_max",
+			"value": ""
+		},
+		{
+			"key": "personId_erika",
 			"value": ""
 		}
 	]

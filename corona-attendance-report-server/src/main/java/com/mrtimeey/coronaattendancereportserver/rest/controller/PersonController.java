@@ -8,10 +8,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -28,36 +31,36 @@ public class PersonController {
     private final PersonService personService;
 
     @Validated(OnCreate.class)
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public ResponseEntity<PersonTO> createPerson(@RequestBody @Valid PersonTO personTO) {
         return ResponseEntity.ok(personService.createPerson(personTO));
     }
 
     @Validated(OnUpdate.class)
-    @RequestMapping(method = RequestMethod.PATCH)
+    @PatchMapping
     public ResponseEntity<PersonTO> updatePerson(@RequestBody @Valid PersonTO personTO) {
         return ResponseEntity.ok(personService.updatePerson(personTO));
     }
 
-    @RequestMapping(value = "/{personId}", method = RequestMethod.GET)
+    @GetMapping(value = "/{personId}")
     public ResponseEntity<PersonTO> getPerson(@PathVariable String personId) {
         return personService.getPerson(personId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity<List<PersonTO>> getPersons() {
         return ResponseEntity.ok(personService.getPersonList());
     }
 
-    @RequestMapping(value = "/{personId}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{personId}")
     public ResponseEntity<Void> deletePerson(@PathVariable String personId) {
         personService.deletePerson(personId);
         return ResponseEntity.ok().build();
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
+    @DeleteMapping
     public ResponseEntity<Void> deleteAllPersons() {
         personService.deleteAll();
         return ResponseEntity.ok().build();
