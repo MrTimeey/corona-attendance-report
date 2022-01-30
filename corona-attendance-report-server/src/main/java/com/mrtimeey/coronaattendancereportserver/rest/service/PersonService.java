@@ -46,8 +46,4 @@ public class PersonService {
                 .collect(Collectors.toList());
     }
 
-    public void deleteAll() {
-        personRepository.deleteAll();
-    }
-
 }

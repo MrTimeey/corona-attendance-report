@@ -7,6 +7,8 @@ import com.mrtimeey.coronaattendancereportserver.rest.transfer.EventTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 @RequiredArgsConstructor
 public class EventService {
@@ -21,5 +23,23 @@ public class EventService {
         }
         Event event = Event.fromTransferObject(eventTO);
         return EventTO.fromBusinessModel(eventRepository.save(event));
+    }
+
+    public EventTO updateEvent(EventTO eventTO) {
+        if (!eventRepository.existsById(eventTO.getId())) {
+            throw new ResourceNotFoundException(String.format("Event with id '%s' not found!", eventTO.getId()));
+        }
+        Event event = Event.fromTransferObject(eventTO);
+        return EventTO.fromBusinessModel(eventRepository.save(event));
+    }
+
+    public Optional<EventTO> getEvent(String eventId) {
+        return eventRepository.findById(eventId)
+                .map(EventTO::fromBusinessModel);
+    }
+
+    public void deleteEvent(String eventId) {
+        eventRepository.findById(eventId)
+                .ifPresent(eventRepository::delete);
     }
 }

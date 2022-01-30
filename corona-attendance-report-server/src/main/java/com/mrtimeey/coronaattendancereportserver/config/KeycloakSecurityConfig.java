@@ -1,5 +1,6 @@
 package com.mrtimeey.coronaattendancereportserver.config;
 
+import com.mrtimeey.coronaattendancereportserver.rest.controller.AdminController;
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +21,23 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 @EnableGlobalMethodSecurity(jsr250Enabled = true)
 public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
+    protected static final String ROLE_ADMIN = "admin";
+    protected static final String ROLE_USER = "user";
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
         http.authorizeRequests()
-                .antMatchers(HttpMethod.DELETE).hasAnyRole("admin")
-                .antMatchers("/*").hasAnyRole("user", "admin")
+                .antMatchers(HttpMethod.DELETE).hasAnyRole(ROLE_ADMIN)
+                .antMatchers(AdminController.API_URL).hasAnyRole(ROLE_ADMIN)
+                .antMatchers("/*").hasAnyRole(ROLE_USER, ROLE_ADMIN)
                 .anyRequest()
                 .permitAll();
         http.csrf().disable();
     }
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    public void configureGlobal(AuthenticationManagerBuilder auth) {
         KeycloakAuthenticationProvider keycloakAuthenticationProvider = keycloakAuthenticationProvider();
         keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(new SimpleAuthorityMapper());
         auth.authenticationProvider(keycloakAuthenticationProvider);

@@ -1,5 +1,6 @@
 package com.mrtimeey.coronaattendancereportserver.rest.controller;
 
+import com.mrtimeey.coronaattendancereportserver.rest.development.DevelopmentService;
 import com.mrtimeey.coronaattendancereportserver.rest.request.OnCreate;
 import com.mrtimeey.coronaattendancereportserver.rest.request.OnUpdate;
 import com.mrtimeey.coronaattendancereportserver.rest.service.TeamService;
@@ -28,6 +29,7 @@ public class TeamController {
 
     public static final String API_URL = "/teams";
     private final TeamService teamService;
+    private final DevelopmentService developmentService;
 
     @Validated(OnCreate.class)
     @PostMapping
@@ -61,7 +63,7 @@ public class TeamController {
 
     @DeleteMapping
     public ResponseEntity<Void> deleteAllTeams() {
-        teamService.deleteAll();
+        developmentService.deleteAllTeams();
         return ResponseEntity.ok().build();
     }
 }

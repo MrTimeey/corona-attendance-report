@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EventRepository extends MongoRepository<Event, String> {
 
+    boolean existsById(String id);
+
 }

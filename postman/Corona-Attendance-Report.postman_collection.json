@@ -688,7 +688,8 @@
 									"script": {
 										"exec": [
 											"var jsonData = pm.response.json();\r",
-											"pm.collectionVariables.set(\"eventId\", jsonData.id);"
+											"pm.collectionVariables.set(\"eventId\", jsonData.id);\r",
+											"pm.collectionVariables.set(\"eventCreated\", jsonData.created);"
 										],
 										"type": "text/javascript"
 									}
@@ -719,8 +720,149 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Update Event",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();\r",
+											"pm.collectionVariables.set(\"eventId\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"{{eventId}}\",\r\n    \"teamId\": \"{{teamId}}\",\r\n    \"name\": \"Trainingseinheit\",\r\n    \"startTime\": \"\",\r\n    \"endTime\": \"\",\r\n    \"date\": \"2022-01-30\",\r\n    \"status\": \"CREATED\",\r\n    \"participants\": [],\r\n    \"created\": \"{{eventCreated}}\",\r\n    \"released\": null,\r\n    \"sent\": null\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8089/events",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8089",
+									"path": [
+										"events"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Event",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8089/events/{{eventId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8089",
+									"path": [
+										"events",
+										"{{eventId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Event",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8089/events/{{eventId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8089",
+									"path": [
+										"events",
+										"{{eventId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete All Events",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8089/events",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8089",
+									"path": [
+										"events"
+									]
+								}
+							},
+							"response": []
 						}
 					]
+				},
+				{
+					"name": "Delete Everything",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8089/admin/deleteAll",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"admin",
+								"deleteAll"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"auth": {
@@ -774,6 +916,10 @@
 		},
 		{
 			"key": "eventId",
+			"value": ""
+		},
+		{
+			"key": "eventCreated",
 			"value": ""
 		}
 	]

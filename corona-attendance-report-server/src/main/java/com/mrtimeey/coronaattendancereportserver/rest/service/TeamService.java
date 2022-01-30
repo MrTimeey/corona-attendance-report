@@ -47,10 +47,6 @@ public class TeamService {
                 .ifPresent(teamRepository::delete);
     }
 
-    public void deleteAll() {
-        teamRepository.deleteAll();
-    }
-
     public boolean teamExisting(String teamId) {
         return teamRepository.existsById(teamId);
     }
