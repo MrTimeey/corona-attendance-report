@@ -29,8 +29,8 @@ public class Person {
         return Person.builder()
                 .id(personTO.getId())
                 .name(personTO.getName())
-                .address(personTO.getAddress() == null ? "" : personTO.getAddress())
-                .phoneNumber(personTO.getPhoneNumber() == null ? "" : personTO.getPhoneNumber())
+                .address(personTO.getAddress())
+                .phoneNumber(personTO.getPhoneNumber())
                 .build();
     }
 

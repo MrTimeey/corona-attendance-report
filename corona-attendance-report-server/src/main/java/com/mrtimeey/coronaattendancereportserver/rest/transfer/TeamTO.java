@@ -3,9 +3,10 @@ package com.mrtimeey.coronaattendancereportserver.rest.transfer;
 import com.mrtimeey.coronaattendancereportserver.domain.entity.Team;
 import com.mrtimeey.coronaattendancereportserver.rest.request.OnCreate;
 import com.mrtimeey.coronaattendancereportserver.rest.request.OnUpdate;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Singular;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -15,6 +16,8 @@ import java.util.List;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class TeamTO {
 
     @NotNull(groups = OnUpdate.class)

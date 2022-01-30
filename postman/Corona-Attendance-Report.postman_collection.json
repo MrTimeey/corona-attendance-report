@@ -676,6 +676,51 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Event",
+					"item": [
+						{
+							"name": "Create Event",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();\r",
+											"pm.collectionVariables.set(\"eventId\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"teamId\": \"{{teamId}}\",\r\n    \"name\": \"Training\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8089/events",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8089",
+									"path": [
+										"events"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			],
 			"auth": {
@@ -725,6 +770,10 @@
 		},
 		{
 			"key": "personId_erika",
+			"value": ""
+		},
+		{
+			"key": "eventId",
 			"value": ""
 		}
 	]

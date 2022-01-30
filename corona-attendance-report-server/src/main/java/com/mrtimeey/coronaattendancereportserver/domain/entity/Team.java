@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -24,10 +23,10 @@ public class Team {
     private String name;
 
     @NotNull
-    private String defaultStartTime = "";
+    private String defaultStartTime;
 
     @NotNull
-    private String defaultEndTime = "";
+    private String defaultEndTime;
 
     @NotNull
     @Singular
@@ -41,10 +40,10 @@ public class Team {
         return Team.builder()
                 .id(teamTO.getId())
                 .name(teamTO.getName())
-                .defaultStartTime(teamTO.getDefaultStartTime() == null ? "" : teamTO.getDefaultStartTime())
-                .defaultEndTime(teamTO.getDefaultEndTime() == null ? "" : teamTO.getDefaultEndTime())
-                .mailTargets(teamTO.getMailTargets() == null ? new ArrayList<>() : teamTO.getMailTargets())
-                .members(teamTO.getMembers() == null ? new ArrayList<>() : teamTO.getMembers())
+                .defaultStartTime(teamTO.getDefaultStartTime())
+                .defaultEndTime(teamTO.getDefaultEndTime())
+                .mailTargets(teamTO.getMailTargets())
+                .members(teamTO.getMembers())
                 .build();
     }
 
