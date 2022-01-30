@@ -2,11 +2,11 @@ package com.mrtimeey.coronaattendancereportserver.rest.service;
 
 import com.mrtimeey.coronaattendancereportserver.domain.entity.Team;
 import com.mrtimeey.coronaattendancereportserver.domain.repository.TeamRepository;
+import com.mrtimeey.coronaattendancereportserver.exception.ResourceNotFoundException;
 import com.mrtimeey.coronaattendancereportserver.rest.transfer.TeamTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,13 +18,16 @@ public class TeamService {
     private final TeamRepository teamRepository;
 
     public TeamTO createTeam(TeamTO teamTO) {
-        Team team = Team.builder()
-                .name(teamTO.getName())
-                .defaultStartTime(teamTO.getDefaultStartTime() == null ? "" : teamTO.getDefaultStartTime())
-                .defaultEndTime(teamTO.getDefaultEndTime() == null ? "" : teamTO.getDefaultEndTime())
-                .mailTargets(teamTO.getMailTargets() == null ? new ArrayList<>() : teamTO.getMailTargets())
-                .members(teamTO.getMembers() == null ? new ArrayList<>() : teamTO.getMembers())
-                .build();
+        Team team = Team.fromTransferObject(teamTO);
+        return TeamTO.fromBusinessModel(teamRepository.save(team));
+    }
+
+    public TeamTO updateTeam(TeamTO teamTO) {
+
+        if (!teamRepository.existsById(teamTO.getId())) {
+            throw new ResourceNotFoundException(String.format("Team with id '%s' not found!", teamTO.getId()));
+        }
+        Team team = Team.fromTransferObject(teamTO);
         return TeamTO.fromBusinessModel(teamRepository.save(team));
     }
 
@@ -37,5 +40,14 @@ public class TeamService {
         return teamRepository.findAll().stream()
                 .map(TeamTO::fromBusinessModel)
                 .collect(Collectors.toList());
+    }
+
+    public void deleteTeam(String teamId) {
+        teamRepository.findById(teamId)
+                .ifPresent(teamRepository::delete);
+    }
+
+    public void deleteAll() {
+        teamRepository.deleteAll();
     }
 }

@@ -2,8 +2,8 @@ package com.mrtimeey.coronaattendancereportserver.rest.controller;
 
 import com.mrtimeey.coronaattendancereportserver.rest.request.OnCreate;
 import com.mrtimeey.coronaattendancereportserver.rest.request.OnUpdate;
-import com.mrtimeey.coronaattendancereportserver.rest.service.TeamService;
-import com.mrtimeey.coronaattendancereportserver.rest.transfer.TeamTO;
+import com.mrtimeey.coronaattendancereportserver.rest.service.PersonService;
+import com.mrtimeey.coronaattendancereportserver.rest.transfer.PersonTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,45 +20,48 @@ import java.util.List;
 @Validated
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(TeamController.API_URL)
-public class TeamController {
+@RequestMapping(PersonController.API_URL)
+public class PersonController {
 
-    public static final String API_URL = "/teams";
-    private final TeamService teamService;
+    public static final String API_URL = "/persons";
+
+    private final PersonService personService;
 
     @Validated(OnCreate.class)
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<TeamTO> createTeam(@RequestBody @Valid TeamTO teamTO) {
-        return ResponseEntity.ok(teamService.createTeam(teamTO));
+    public ResponseEntity<PersonTO> createPerson(@RequestBody @Valid PersonTO personTO) {
+        return ResponseEntity.ok(personService.createPerson(personTO));
     }
 
     @Validated(OnUpdate.class)
     @RequestMapping(method = RequestMethod.PATCH)
-    public ResponseEntity<TeamTO> updateTeam(@RequestBody @Valid TeamTO teamTO) {
-        return ResponseEntity.ok(teamService.updateTeam(teamTO));
+    public ResponseEntity<PersonTO> updatePerson(@RequestBody @Valid PersonTO personTO) {
+        return ResponseEntity.ok(personService.updatePerson(personTO));
     }
 
-    @RequestMapping(value = "/{teamId}", method = RequestMethod.GET)
-    public ResponseEntity<TeamTO> getTeam(@PathVariable String teamId) {
-        return teamService.getTeam(teamId)
+    @RequestMapping(value = "/{personId}", method = RequestMethod.GET)
+    public ResponseEntity<PersonTO> getPerson(@PathVariable String personId) {
+        return personService.getPerson(personId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<TeamTO>> getTeams() {
-        return ResponseEntity.ok(teamService.getTeamList());
+    public ResponseEntity<List<PersonTO>> getPersons() {
+        return ResponseEntity.ok(personService.getPersonList());
     }
 
-    @RequestMapping(value = "/{teamId}", method = RequestMethod.GET)
-    public ResponseEntity<TeamTO> deleteTeam(@PathVariable String teamId) {
-        teamService.deleteTeam(teamId);
+    @RequestMapping(value = "/{personId}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> deletePerson(@PathVariable String personId) {
+        personService.deletePerson(personId);
         return ResponseEntity.ok().build();
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
-    public ResponseEntity<Void> deleteAllTeams() {
-        teamService.deleteAll();
+    public ResponseEntity<Void> deleteAllPersons() {
+        personService.deleteAll();
         return ResponseEntity.ok().build();
     }
+
+
 }
