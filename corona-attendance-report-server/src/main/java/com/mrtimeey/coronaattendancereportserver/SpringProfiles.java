@@ -8,5 +8,6 @@ public final class SpringProfiles {
 
     public static final String LOCAL = "local";
     public static final String NOT_LOCAL = "!local";
+    public static final String NO_SECURITY = "nosecurity";
 
 }

@@ -1,6 +1,6 @@
 package com.mrtimeey.coronaattendancereportserver.rest.controller;
 
-import com.mrtimeey.coronaattendancereportserver.rest.development.LocalDevelopmentService;
+import com.mrtimeey.coronaattendancereportserver.rest.development.DevelopmentService;
 import com.mrtimeey.coronaattendancereportserver.rest.request.OnCreate;
 import com.mrtimeey.coronaattendancereportserver.rest.request.OnUpdate;
 import com.mrtimeey.coronaattendancereportserver.rest.service.PersonService;
@@ -30,7 +30,7 @@ public class PersonController {
     public static final String API_URL = "/persons";
 
     private final PersonService personService;
-    private final LocalDevelopmentService localDevelopmentService;
+    private final DevelopmentService localDevelopmentService;
 
     @Validated(OnCreate.class)
     @PostMapping
