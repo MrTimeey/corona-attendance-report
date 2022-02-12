@@ -29,8 +29,10 @@ public class TeamTO {
     @NotBlank
     private String name;
 
+    @Builder.Default
     private String defaultStartTime = "";
 
+    @Builder.Default
     private String defaultEndTime = "";
 
     @Builder.Default
