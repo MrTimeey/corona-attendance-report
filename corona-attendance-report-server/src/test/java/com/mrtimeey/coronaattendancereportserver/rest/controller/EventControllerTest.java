@@ -21,7 +21,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -46,7 +46,7 @@ class EventControllerTest {
     @MockBean
     private DevelopmentService developmentService;
 
-    private JsonTestHelper jsonTestHelper = new JsonTestHelper();
+    private final JsonTestHelper jsonTestHelper = new JsonTestHelper();
 
     private String eventId;
 
@@ -72,8 +72,8 @@ class EventControllerTest {
         mockMvc
                 .perform(request)
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.name", is("Testevent")))
-                .andExpect(jsonPath("$.teamId", is(teamId)));
+                .andExpect(jsonPath("$.name").value("Testevent"))
+                .andExpect(jsonPath("$.teamId").value(teamId));
     }
 
     @Test
@@ -110,9 +110,9 @@ class EventControllerTest {
         mockMvc
                 .perform(request)
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", is("Testevent")))
-                .andExpect(jsonPath("$.endTime", is("endTime")))
-                .andExpect(jsonPath("$.teamId", is(teamId)));
+                .andExpect(jsonPath("$.name").value("Testevent"))
+                .andExpect(jsonPath("$.endTime").value("endTime"))
+                .andExpect(jsonPath("$.teamId").value(teamId));
     }
 
     @Test
@@ -143,7 +143,16 @@ class EventControllerTest {
         mockMvc
                 .perform(get("/events/{eventId}", eventId))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", is("Testevent")));
+                .andExpect(jsonPath("$.name").value("Testevent"));
+    }
+
+    @Test
+    void shouldNotFindAnyEvent() throws Exception {
+        when(eventService.getEvent(any())).thenReturn(Optional.empty());
+
+        mockMvc
+                .perform(get("/events/{eventId}", eventId))
+                .andExpect(status().isNotFound());
     }
 
     @Test
