@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(AdminController.class)
-@ActiveProfiles(SpringProfiles.NO_SECURITY)
+@ActiveProfiles(SpringProfiles.NOSECURITY)
 class AdminControllerTest {
 
     @Autowired
@@ -27,7 +27,7 @@ class AdminControllerTest {
     private DevelopmentService developmentService;
 
     @Test
-    public void shouldDeleteEverything() throws Exception {
+    void shouldDeleteEverything() throws Exception {
         mockMvc
                 .perform(delete("/admin/deleteAll"))
                 .andExpect(status().isOk())
@@ -35,4 +35,5 @@ class AdminControllerTest {
 
         verify(developmentService, times(1)).deleteAll();
     }
+
 }

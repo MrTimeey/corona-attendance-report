@@ -1,5 +1,6 @@
 package com.mrtimeey.coronaattendancereportserver.config;
 
+import com.mrtimeey.coronaattendancereportserver.SpringProfiles;
 import com.mrtimeey.coronaattendancereportserver.rest.controller.AdminController;
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
@@ -20,7 +21,7 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(jsr250Enabled = true)
-@Profile("!nosecurity")
+@Profile(SpringProfiles.NOT_NOSECURITY)
 public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
     protected static final String ROLE_ADMIN = "admin";

@@ -10,7 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-@ActiveProfiles(SpringProfiles.NO_SECURITY)
+@ActiveProfiles(SpringProfiles.NOSECURITY)
 class CoronaAttendanceReportServerApplicationTests {
 
 	@Autowired

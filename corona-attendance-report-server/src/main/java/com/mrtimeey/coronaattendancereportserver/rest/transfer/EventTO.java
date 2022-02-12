@@ -34,6 +34,7 @@ public class EventTO {
     @Builder.Default
     private String name = "";
 
+    @Builder.Default
     private String startTime = "";
 
     @Builder.Default
