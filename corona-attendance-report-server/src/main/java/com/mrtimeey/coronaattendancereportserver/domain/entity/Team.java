@@ -1,5 +1,7 @@
 package com.mrtimeey.coronaattendancereportserver.domain.entity;
 
+import com.mrtimeey.coronaattendancereportserver.rest.request.OnCreate;
+import com.mrtimeey.coronaattendancereportserver.rest.request.OnUpdate;
 import com.mrtimeey.coronaattendancereportserver.rest.transfer.TeamTO;
 import lombok.Builder;
 import lombok.Data;
@@ -9,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.util.List;
 import java.util.Set;
 
@@ -18,6 +21,8 @@ import java.util.Set;
 public class Team {
 
     @Id
+    @NotNull(groups = OnUpdate.class)
+    @Null(groups = OnCreate.class)
     private String id;
 
     @NotBlank

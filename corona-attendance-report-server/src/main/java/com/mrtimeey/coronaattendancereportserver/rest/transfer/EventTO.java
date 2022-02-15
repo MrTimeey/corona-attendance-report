@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Singular;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.time.LocalDate;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Builder
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 public class EventTO {
@@ -28,7 +29,7 @@ public class EventTO {
     @Null(groups = OnCreate.class)
     private String id;
 
-    @NotNull
+    @NotBlank
     private String teamId;
 
     @Builder.Default
