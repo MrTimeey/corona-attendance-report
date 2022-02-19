@@ -5,6 +5,7 @@ import com.mrtimeey.coronaattendancereportserver.domain.repository.TeamRepositor
 import com.mrtimeey.coronaattendancereportserver.exception.ResourceNotFoundException;
 import com.mrtimeey.coronaattendancereportserver.rest.request.OnCreate;
 import com.mrtimeey.coronaattendancereportserver.rest.request.OnUpdate;
+import com.mrtimeey.coronaattendancereportserver.rest.transfer.PersonTO;
 import com.mrtimeey.coronaattendancereportserver.rest.transfer.TeamTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
@@ -28,8 +29,9 @@ public class TeamService {
 
     @Validated(OnCreate.class)
     public TeamTO createTeam(@Valid TeamTO teamTO) {
-        Team team = Team.fromTransferObject(teamTO);
-        return TeamTO.fromBusinessModel(teamRepository.save(team));
+        List<PersonTO> existingMembers = teamTO.getMembers().stream().filter(member -> personService.personExists(member.getId())).collect(Collectors.toList());
+        Team team = Team.fromTransferObject(teamTO.toBuilder().members(existingMembers).build());
+        return getTeamTO(teamRepository.save(team));
     }
 
     @Validated(OnUpdate.class)
@@ -38,12 +40,12 @@ public class TeamService {
             throw new ResourceNotFoundException(String.format("Team with id '%s' not found!", teamTO.getId()));
         }
         Team team = Team.fromTransferObject(teamTO);
-        return TeamTO.fromBusinessModel(teamRepository.save(team));
+        return getTeamTO(teamRepository.save(team));
     }
 
     public Optional<TeamTO> getTeam(@NotBlank String teamId) {
         return teamRepository.findById(teamId)
-                .map(TeamTO::fromBusinessModel);
+                .map(this::getTeamTO);
     }
 
     public TeamTO addMemberList(@NotBlank String teamId, @NotNull List<String> membersToAdd) {
@@ -53,12 +55,12 @@ public class TeamService {
                 .filter(personService::personExists)
                 .collect(Collectors.toList());
         team.getMembers().addAll(existingNewMember);
-        return TeamTO.fromBusinessModel(teamRepository.save(team));
+        return getTeamTO(teamRepository.save(team));
     }
 
     public List<TeamTO> getTeamList() {
         return teamRepository.findAll().stream()
-                .map(TeamTO::fromBusinessModel)
+                .map(this::getTeamTO)
                 .collect(Collectors.toList());
     }
 
@@ -72,5 +74,16 @@ public class TeamService {
             return false;
         }
         return teamRepository.existsById(teamId);
+    }
+
+    private TeamTO getTeamTO(Team team) {
+        List<PersonTO> memberList = team.getMembers().stream()
+                .map(personService::getPerson)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList());
+        return TeamTO.fromBusinessModel(team).toBuilder()
+                .members(memberList)
+                .build();
     }
 }

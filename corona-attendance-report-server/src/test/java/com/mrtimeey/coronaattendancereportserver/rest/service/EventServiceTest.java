@@ -1,10 +1,13 @@
 package com.mrtimeey.coronaattendancereportserver.rest.service;
 
 import com.mrtimeey.coronaattendancereportserver.domain.entity.Event;
+import com.mrtimeey.coronaattendancereportserver.domain.entity.EventParticipant;
 import com.mrtimeey.coronaattendancereportserver.domain.entity.EventStatus;
 import com.mrtimeey.coronaattendancereportserver.domain.repository.EventRepository;
 import com.mrtimeey.coronaattendancereportserver.exception.ResourceNotFoundException;
 import com.mrtimeey.coronaattendancereportserver.rest.transfer.EventTO;
+import com.mrtimeey.coronaattendancereportserver.rest.transfer.PersonTO;
+import com.mrtimeey.coronaattendancereportserver.rest.transfer.TeamTO;
 import com.mrtimeey.coronaattendancereportserver.utils.AbstractIntegrationTest;
 import com.mrtimeey.coronaattendancereportserver.utils.DateUtils;
 import org.junit.jupiter.api.AfterEach;
@@ -41,11 +44,22 @@ class EventServiceTest extends AbstractIntegrationTest {
     @AfterEach
     void clearRepository() {
         eventRepository.deleteAll();
-        when(teamService.teamExisting(existingTeamId)).thenReturn(true);
+        TeamTO team = TeamTO.builder().id(existingTeamId).name("Test Team").build();
+        when(teamService.getTeam(existingTeamId)).thenReturn(Optional.of(team));
     }
 
     @Test
     void createEvent() {
+        PersonTO personToCreate = PersonTO.builder().name("Hans").id(UUID.randomUUID().toString()).build();
+
+        TeamTO team = TeamTO.builder()
+                .id(existingTeamId)
+                .name("Test Team")
+                .members(List.of(personToCreate))
+                .build();
+
+        when(teamService.getTeam(existingTeamId)).thenReturn(Optional.of(team));
+
         EventTO eventTO = EventTO.builder()
                 .name("Test Event Name")
                 .teamId(existingTeamId)
@@ -53,6 +67,7 @@ class EventServiceTest extends AbstractIntegrationTest {
 
         EventTO serviceResult = serviceUnderTest.createEvent(eventTO);
 
+        EventParticipant eventParticipant = EventParticipant.builder().name("Hans").build();
         EventTO expectedEvent = EventTO.builder()
                 .id(serviceResult.getId())
                 .name("Test Event Name")
@@ -63,7 +78,7 @@ class EventServiceTest extends AbstractIntegrationTest {
                 .created(LocalDateTime.now())
                 .released(null)
                 .status(EventStatus.CREATED)
-                .participants(List.of())
+                .participants(List.of(eventParticipant))
                 .sent(null)
                 .build();
 

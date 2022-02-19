@@ -12,9 +12,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @Builder(toBuilder = true)
@@ -39,7 +37,7 @@ public class TeamTO {
     private List<String> mailTargets = new ArrayList<>();
 
     @Builder.Default
-    private Set<String> members = new HashSet<>();
+    private List<PersonTO> members = new ArrayList<>();
 
     public static TeamTO fromBusinessModel(Team team) {
         return TeamTO.builder()
@@ -48,7 +46,6 @@ public class TeamTO {
                 .defaultStartTime(team.getDefaultStartTime())
                 .defaultEndTime(team.getDefaultEndTime())
                 .mailTargets(team.getMailTargets())
-                .members(team.getMembers())
                 .build();
     }
 

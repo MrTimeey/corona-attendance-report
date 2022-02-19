@@ -2,6 +2,7 @@ package com.mrtimeey.coronaattendancereportserver.domain.entity;
 
 import com.mrtimeey.coronaattendancereportserver.rest.request.OnCreate;
 import com.mrtimeey.coronaattendancereportserver.rest.request.OnUpdate;
+import com.mrtimeey.coronaattendancereportserver.rest.transfer.PersonTO;
 import com.mrtimeey.coronaattendancereportserver.rest.transfer.TeamTO;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +15,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 @Builder
@@ -49,7 +51,7 @@ public class Team {
                 .defaultStartTime(teamTO.getDefaultStartTime())
                 .defaultEndTime(teamTO.getDefaultEndTime())
                 .mailTargets(teamTO.getMailTargets())
-                .members(teamTO.getMembers())
+                .members(teamTO.getMembers().stream().map(PersonTO::getId).collect(Collectors.toList()))
                 .build();
     }
 

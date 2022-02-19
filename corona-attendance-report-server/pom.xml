@@ -115,6 +115,14 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven-surefire-plugin.version}</version>
+				<configuration>
+					<forkMode>once</forkMode>
+					<argLine>-Duser.language=en</argLine>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 

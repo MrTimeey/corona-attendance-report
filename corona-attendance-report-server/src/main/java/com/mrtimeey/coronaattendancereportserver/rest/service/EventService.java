@@ -34,9 +34,6 @@ public class EventService {
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("Event not created! Team with id '%s' not found!", eventTO.getTeamId())));
         Event event = Event.fromTransferObject(eventTO);
         List<EventParticipant> eventParticipants = teamTO.getMembers().stream()
-                .map(personService::getPerson)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
                 .map(EventParticipant::fromTransferObject)
                 .collect(Collectors.toList());
         event.setParticipants(eventParticipants);
