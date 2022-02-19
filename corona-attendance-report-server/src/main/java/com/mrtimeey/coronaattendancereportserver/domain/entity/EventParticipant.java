@@ -23,6 +23,9 @@ public class EventParticipant {
     @Builder.Default
     private String phoneNumber = "";
 
+    @Builder.Default
+    private boolean wasPresent = false;
+
     public static EventParticipant fromTransferObject(PersonTO personTO) {
         return EventParticipant.builder()
                 .name(personTO.getName())

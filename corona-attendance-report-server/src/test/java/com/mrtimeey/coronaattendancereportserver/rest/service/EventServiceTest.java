@@ -49,12 +49,14 @@ class EventServiceTest extends AbstractIntegrationTest {
     }
 
     @Test
-    void createEvent() {
+    void createEvent_TeamValuesWillBeFilled() {
         PersonTO personToCreate = PersonTO.builder().name("Hans").id(UUID.randomUUID().toString()).build();
 
         TeamTO team = TeamTO.builder()
                 .id(existingTeamId)
                 .name("Test Team")
+                .defaultStartTime("19:00 Uhr")
+                .defaultEndTime("20:00 Uhr")
                 .members(List.of(personToCreate))
                 .build();
 
@@ -73,8 +75,50 @@ class EventServiceTest extends AbstractIntegrationTest {
                 .name("Test Event Name")
                 .teamId(existingTeamId)
                 .date(LocalDate.now())
-                .startTime("")
-                .endTime("")
+                .startTime("19:00 Uhr")
+                .endTime("20:00 Uhr")
+                .created(LocalDateTime.now())
+                .released(null)
+                .status(EventStatus.CREATED)
+                .participants(List.of(eventParticipant))
+                .sent(null)
+                .build();
+
+        validateEvent(serviceResult, expectedEvent);
+    }
+
+    @Test
+    void createEvent_EventValuesWinAgainstDefaults() {
+        PersonTO personToCreate = PersonTO.builder().name("Hans").id(UUID.randomUUID().toString()).build();
+
+        TeamTO team = TeamTO.builder()
+                .id(existingTeamId)
+                .name("Test Team")
+                .defaultStartTime("19:00 Uhr")
+                .defaultEndTime("20:00 Uhr")
+                .members(List.of(personToCreate))
+                .build();
+
+        when(teamService.getTeam(existingTeamId)).thenReturn(Optional.of(team));
+
+        EventTO eventTO = EventTO.builder()
+                .name("Test Event Name")
+                .startTime("10:00 Uhr")
+                .endTime("11:00 Uhr")
+                .date(LocalDate.of(1900, 10, 1))
+                .teamId(existingTeamId)
+                .build();
+
+        EventTO serviceResult = serviceUnderTest.createEvent(eventTO);
+
+        EventParticipant eventParticipant = EventParticipant.builder().name("Hans").build();
+        EventTO expectedEvent = EventTO.builder()
+                .id(serviceResult.getId())
+                .name("Test Event Name")
+                .teamId(existingTeamId)
+                .date(LocalDate.of(1900, 10, 1))
+                .startTime("10:00 Uhr")
+                .endTime("11:00 Uhr")
                 .created(LocalDateTime.now())
                 .released(null)
                 .status(EventStatus.CREATED)

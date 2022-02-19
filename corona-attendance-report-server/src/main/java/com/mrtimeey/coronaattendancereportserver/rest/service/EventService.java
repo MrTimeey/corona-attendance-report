@@ -1,5 +1,6 @@
 package com.mrtimeey.coronaattendancereportserver.rest.service;
 
+import com.google.common.base.Strings;
 import com.mrtimeey.coronaattendancereportserver.domain.entity.Event;
 import com.mrtimeey.coronaattendancereportserver.domain.entity.EventParticipant;
 import com.mrtimeey.coronaattendancereportserver.domain.repository.EventRepository;
@@ -23,7 +24,6 @@ import java.util.stream.Collectors;
 @Validated
 public class EventService {
 
-    private final PersonService personService;
     private final TeamService teamService;
     private final EventRepository eventRepository;
 
@@ -37,6 +37,16 @@ public class EventService {
                 .map(EventParticipant::fromTransferObject)
                 .collect(Collectors.toList());
         event.setParticipants(eventParticipants);
+
+        String startTime = Strings.isNullOrEmpty(eventTO.getStartTime()) ? teamTO.getDefaultStartTime() : eventTO.getStartTime();
+        event.setStartTime(startTime);
+
+        String endTime = Strings.isNullOrEmpty(eventTO.getEndTime()) ? teamTO.getDefaultEndTime() : eventTO.getEndTime();
+        event.setEndTime(endTime);
+
+        if (eventTO.getDate() != null) {
+            event.setDate(eventTO.getDate());
+        }
         return EventTO.fromBusinessModel(eventRepository.save(event));
     }
 
