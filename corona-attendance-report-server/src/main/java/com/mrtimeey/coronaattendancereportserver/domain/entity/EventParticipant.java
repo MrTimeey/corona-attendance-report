@@ -3,16 +3,16 @@ package com.mrtimeey.coronaattendancereportserver.domain.entity;
 import com.mrtimeey.coronaattendancereportserver.rest.transfer.PersonTO;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.NotBlank;
+import java.util.UUID;
 
 @Data
 @Builder
 public class EventParticipant {
 
-    @Id
-    private String id;
+    @Builder.Default
+    private String id = UUID.randomUUID().toString();
 
     @NotBlank
     private String name;
