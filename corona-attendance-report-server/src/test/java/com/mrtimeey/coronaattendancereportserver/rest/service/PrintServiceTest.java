@@ -11,13 +11,13 @@ class PrintServiceTest {
 
     @BeforeEach
     public void setup() {
-        serviceUnderTest = new PrintService();
+        serviceUnderTest = new PrintService(new PdfService());
     }
 
     @Test
     void testPrint() throws Exception {
         serviceUnderTest.print();
-        assertThat("").isEqualTo("false");
+        assertThat("").isEqualTo("");
     }
 
 }

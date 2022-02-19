@@ -18,8 +18,8 @@
 		<keycloak.version>16.1.1</keycloak.version>
 		<guava.version>31.0.1-jre</guava.version>
 		<commons.io.version>20030203.000550</commons.io.version>
-		<itextpdf.version>5.5.13.2</itextpdf.version>
-		<poi.version>5.0.0</poi.version>
+		<openhtml.version>1.0.10</openhtml.version>
+		<jsoup.version>1.14.3</jsoup.version>
 		<assertj.version>3.22.0</assertj.version>
 		<testcontainers.version>1.16.3</testcontainers.version>
 	</properties>
@@ -67,27 +67,22 @@
 			<artifactId>commons-io</artifactId>
 			<version>${commons.io.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.itextpdf</groupId>
-			<artifactId>itextpdf</artifactId>
-			<version>${itextpdf.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.itextpdf.tool</groupId>
-			<artifactId>xmlworker</artifactId>
-			<version>${itextpdf.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-ooxml</artifactId>
-			<version>${poi.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-scratchpad</artifactId>
-			<version>${poi.version}</version>
-		</dependency>
 
+		<dependency>
+			<groupId>com.openhtmltopdf</groupId>
+			<artifactId>openhtmltopdf-core</artifactId>
+			<version>${openhtml.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.openhtmltopdf</groupId>
+			<artifactId>openhtmltopdf-pdfbox</artifactId>
+			<version>${openhtml.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>${jsoup.version}</version>
+		</dependency>
 
 		<!-- Test -->
 		<dependency>
