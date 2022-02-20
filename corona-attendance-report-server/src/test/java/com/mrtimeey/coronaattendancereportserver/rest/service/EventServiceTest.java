@@ -3,6 +3,7 @@ package com.mrtimeey.coronaattendancereportserver.rest.service;
 import com.mrtimeey.coronaattendancereportserver.domain.entity.Event;
 import com.mrtimeey.coronaattendancereportserver.domain.entity.EventParticipant;
 import com.mrtimeey.coronaattendancereportserver.domain.entity.EventStatus;
+import com.mrtimeey.coronaattendancereportserver.domain.entity.ParticipantStatus;
 import com.mrtimeey.coronaattendancereportserver.domain.repository.EventRepository;
 import com.mrtimeey.coronaattendancereportserver.exception.ResourceNotFoundException;
 import com.mrtimeey.coronaattendancereportserver.rest.transfer.EventTO;
@@ -111,7 +112,7 @@ class EventServiceTest extends AbstractIntegrationTest {
 
         EventTO serviceResult = serviceUnderTest.createEvent(eventTO);
 
-        EventParticipant eventParticipant = EventParticipant.builder().name("Hans").build();
+        EventParticipant eventParticipant = EventParticipant.builder().name("Hans").status(ParticipantStatus.NONE).build();
         EventTO expectedEvent = EventTO.builder()
                 .id(serviceResult.getId())
                 .name("Test Event Name")

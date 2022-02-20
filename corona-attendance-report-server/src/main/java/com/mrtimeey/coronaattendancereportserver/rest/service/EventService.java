@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 @Validated
 public class EventService {
 
+    private final PrintService printService;
     private final TeamService teamService;
     private final EventRepository eventRepository;
 
@@ -62,6 +63,14 @@ public class EventService {
     public Optional<EventTO> getEvent(@NotBlank String eventId) {
         return eventRepository.findById(eventId)
                 .map(EventTO::fromBusinessModel);
+    }
+
+    public void printEvent(@NotBlank String eventId) {
+        getEvent(eventId)
+                .ifPresent(event -> {
+                    TeamTO teamTO = teamService.getTeam(event.getTeamId()).get();
+                    printService.print(teamTO, event);
+                });
     }
 
     public void deleteEvent(@NotBlank String eventId) {

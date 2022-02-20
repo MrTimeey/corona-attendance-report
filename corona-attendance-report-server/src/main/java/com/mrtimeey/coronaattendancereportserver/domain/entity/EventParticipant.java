@@ -24,7 +24,7 @@ public class EventParticipant {
     private String phoneNumber = "";
 
     @Builder.Default
-    private boolean wasPresent = false;
+    private ParticipantStatus status = ParticipantStatus.NONE;
 
     public static EventParticipant fromTransferObject(PersonTO personTO) {
         return EventParticipant.builder()

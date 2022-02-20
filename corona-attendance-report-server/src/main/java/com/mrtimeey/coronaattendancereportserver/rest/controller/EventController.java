@@ -50,6 +50,12 @@ public class EventController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
+    @PostMapping(value = "/{eventId}/print")
+    public ResponseEntity<EventTO> printEvent(@PathVariable String eventId) {
+        eventService.printEvent(eventId);
+        return ResponseEntity.ok(null);
+    }
+
     @DeleteMapping(value = "/{eventId}")
     public ResponseEntity<Void> deleteEvent(@PathVariable String eventId) {
         eventService.deleteEvent(eventId);
