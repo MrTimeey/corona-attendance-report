@@ -50,7 +50,7 @@
 
 <h1>Anwesenheitsliste</h1>
 
-<p>${teamName?html}</p>
+<p>${teamName?html} - ${eventName?html}</p>
 
 <p><b>Datum:</b> ${date?html} <b>Zeit:</b> ${startTime?html} - ${endTime?html}</p>
 
