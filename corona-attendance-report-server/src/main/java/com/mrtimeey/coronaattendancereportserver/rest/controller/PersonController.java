@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Validated
 @RestController
@@ -36,6 +37,15 @@ public class PersonController {
     @PostMapping
     public ResponseEntity<PersonTO> createPerson(@RequestBody @Valid PersonTO personTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(personService.createPerson(personTO));
+    }
+
+    @Validated(OnCreate.class)
+    @PostMapping("/list")
+    public ResponseEntity<List<PersonTO>> createMultiplePersons(@RequestBody @Valid List<PersonTO> personList) {
+        List<PersonTO> createdPersonList = personList.stream()
+                .map(personService::createPerson)
+                .collect(Collectors.toList());
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdPersonList);
     }
 
     @Validated(OnUpdate.class)

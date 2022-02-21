@@ -3,6 +3,7 @@ package com.mrtimeey.coronaattendancereportserver.rest.controller;
 import com.mrtimeey.coronaattendancereportserver.SpringProfiles;
 import com.mrtimeey.coronaattendancereportserver.rest.development.DevelopmentService;
 import com.mrtimeey.coronaattendancereportserver.rest.service.TeamService;
+import com.mrtimeey.coronaattendancereportserver.rest.transfer.PersonTO;
 import com.mrtimeey.coronaattendancereportserver.rest.transfer.TeamTO;
 import com.mrtimeey.coronaattendancereportserver.utils.JsonTestHelper;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,10 +17,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.web.util.NestedServletException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -158,17 +157,22 @@ class TeamControllerTest {
 
     @Test
     void shouldAddMemberToTeam() throws Exception {
-        Set<String> membersToAdd = Set.of(UUID.randomUUID().toString(), UUID.randomUUID().toString());
+        String firstMember = UUID.randomUUID().toString();
+        PersonTO firstPerson = PersonTO.builder().id(firstMember).name("first").build();
+        String secondMember = UUID.randomUUID().toString();
+        PersonTO secondPerson = PersonTO.builder().id(secondMember).name("second").build();
+        List<PersonTO> membersToAdd = List.of(firstPerson, secondPerson);
+
         TeamTO team = TeamTO.builder()
                 .id(teamId)
                 .members(membersToAdd)
                 .build();
 
-        when(teamService.addMemberList(teamId, new ArrayList<>(membersToAdd))).thenReturn(team);
+        when(teamService.addMemberList(teamId, List.of(firstMember, secondMember))).thenReturn(team);
 
         MockHttpServletRequestBuilder request = post("/teams/{teamId}/members", teamId)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(jsonTestHelper.toJson(membersToAdd));
+                .content(jsonTestHelper.toJson(List.of(firstMember, secondMember)));
 
         mockMvc
                 .perform(request)

@@ -3,20 +3,20 @@ package com.mrtimeey.coronaattendancereportserver.rest.service;
 import com.mrtimeey.coronaattendancereportserver.domain.entity.Team;
 import com.mrtimeey.coronaattendancereportserver.domain.repository.TeamRepository;
 import com.mrtimeey.coronaattendancereportserver.exception.ResourceNotFoundException;
+import com.mrtimeey.coronaattendancereportserver.rest.transfer.PersonTO;
 import com.mrtimeey.coronaattendancereportserver.rest.transfer.TeamTO;
 import com.mrtimeey.coronaattendancereportserver.utils.AbstractIntegrationTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -44,7 +44,10 @@ class TeamServiceTest extends AbstractIntegrationTest {
     void createTeam() {
         TeamTO team = TeamTO.builder()
                 .name("FC Test Team")
+                .members(List.of(PersonTO.builder().id(UUID.randomUUID().toString()).name("Hans").build()))
                 .build();
+
+        when(personService.personExists(any())).thenReturn(true);
 
         TeamTO serviceResult = serviceUnderTest.createTeam(team);
 
@@ -54,6 +57,30 @@ class TeamServiceTest extends AbstractIntegrationTest {
                 .defaultStartTime("")
                 .defaultEndTime("")
                 .mailTargets(List.of())
+                .members(List.of(PersonTO.builder().id(UUID.randomUUID().toString()).name("Hans").build()))
+                .build();
+
+        validateTeam(serviceResult, expectedTeam);
+    }
+
+    @Test
+    void createTeamShouldFilterNonExistingMembers() {
+        TeamTO team = TeamTO.builder()
+                .name("FC Test Team")
+                .members(List.of(PersonTO.builder().id(UUID.randomUUID().toString()).name("Hans").build()))
+                .build();
+
+        when(personService.personExists(any())).thenReturn(false);
+
+        TeamTO serviceResult = serviceUnderTest.createTeam(team);
+
+        TeamTO expectedTeam = TeamTO.builder()
+                .id(serviceResult.getId())
+                .name("FC Test Team")
+                .defaultStartTime("")
+                .defaultEndTime("")
+                .mailTargets(List.of())
+                .members(List.of())
                 .build();
 
         validateTeam(serviceResult, expectedTeam);
@@ -291,7 +318,7 @@ class TeamServiceTest extends AbstractIntegrationTest {
                 .defaultStartTime("")
                 .defaultEndTime("")
                 .mailTargets(List.of())
-                .members(Set.of())
+                .members(List.of())
                 .build();
 
         validateTeam(serviceResult, expectedTeam);
@@ -305,11 +332,16 @@ class TeamServiceTest extends AbstractIntegrationTest {
 
         TeamTO createdTeam = serviceUnderTest.createTeam(team);
 
-        String firstPerson = UUID.randomUUID().toString();
-        String secondPerson = UUID.randomUUID().toString();
-        List<String> membersToAdd = List.of(firstPerson, secondPerson);
+        String firstPersonId = UUID.randomUUID().toString();
+        String secondPersonId = UUID.randomUUID().toString();
+
+        PersonTO firstPerson = PersonTO.builder().id(firstPersonId).name("first").build();
+        PersonTO secondPerson = PersonTO.builder().id(secondPersonId).name("second").build();
+
         when(personService.personExists(any(String.class))).thenReturn(true);
-        TeamTO serviceResult = serviceUnderTest.addMemberList(createdTeam.getId(), membersToAdd);
+        when(personService.getPerson(firstPersonId)).thenReturn(Optional.of(firstPerson));
+        when(personService.getPerson(secondPersonId)).thenReturn(Optional.of(secondPerson));
+        TeamTO serviceResult = serviceUnderTest.addMemberList(createdTeam.getId(), List.of(firstPersonId, secondPersonId));
 
         TeamTO expectedTeam = TeamTO.builder()
                 .id(createdTeam.getId())
@@ -317,7 +349,7 @@ class TeamServiceTest extends AbstractIntegrationTest {
                 .defaultStartTime("")
                 .defaultEndTime("")
                 .mailTargets(List.of())
-                .members(Set.of(firstPerson, secondPerson))
+                .members(List.of(firstPerson, secondPerson))
                 .build();
 
         validateTeam(serviceResult, expectedTeam);
@@ -335,7 +367,9 @@ class TeamServiceTest extends AbstractIntegrationTest {
         assertThat(repositoryResult.get().getDefaultStartTime()).isNotNull().isEqualTo(expectedTeam.getDefaultStartTime());
         assertThat(repositoryResult.get().getDefaultEndTime()).isNotNull().isEqualTo(expectedTeam.getDefaultEndTime());
         assertThat(repositoryResult.get().getMailTargets()).isNotNull().containsExactlyInAnyOrderElementsOf(expectedTeam.getMailTargets());
-        assertThat(repositoryResult.get().getMembers()).isNotNull().containsExactlyInAnyOrderElementsOf(expectedTeam.getMembers());
+        assertThat(repositoryResult.get().getMembers())
+                .isNotNull()
+                .containsExactlyInAnyOrderElementsOf(expectedTeam.getMembers().stream().map(PersonTO::getId).collect(Collectors.toList()));
     }
 
 }
