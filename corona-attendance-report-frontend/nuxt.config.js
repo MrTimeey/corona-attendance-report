@@ -1,6 +1,9 @@
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
+  server: {
+    port: 8080 // default: 3000
+  },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -31,7 +34,7 @@ export default {
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/tailwindcss
-    '@nuxtjs/tailwindcss',
+    '@nuxtjs/tailwindcss'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -53,7 +56,7 @@ export default {
     strategies: {
       oidc: {
         scheme: 'openIDConnect',
-        clientId: 'web',
+        clientId: 'corona-attendance-report-frontend',
         endpoints: {
           configuration:
             'http://localhost:8088/auth/realms/corona-attendance-report/.well-known/openid-configuration',
@@ -62,16 +65,6 @@ export default {
         grantType: 'authorization_code',
         scope: ['openid', 'profile', 'offline_access'],
         codeChallengeMethod: 'S256',
-      },
-      keycloak2: {
-        _scheme: 'oauth2',
-        authorization_endpoint:'https://localhost:8088/user/authorize',
-        userinfo_endpoint: false,
-        access_type: 'offline',
-        access_token_endpoint: 'https://localhost:8088/token',
-        response_type: 'code',
-        token_type: 'Bearer',
-        token_key: 'access_token',
       },
       keycloak: {
         scheme: 'oauth2',

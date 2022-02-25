@@ -1,7 +1,8 @@
 .DS_Store
 node_modules
 /dist
-
+.nuxt
+.eslintcache
 
 # local env files
 .env.local
