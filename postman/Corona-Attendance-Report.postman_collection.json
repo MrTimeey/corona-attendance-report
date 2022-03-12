@@ -46,7 +46,7 @@
 								},
 								{
 									"key": "client_secret",
-									"value": "7DL3bOou3eT7xvSQC81DtXAKN7F7C5hd",
+									"value": "l03y8IyJOYuNLyK923SiJspq95HRbzOH",
 									"type": "text"
 								},
 								{
@@ -62,12 +62,13 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8088/auth/realms/corona-attendance-report/protocol/openid-connect/token",
-							"protocol": "http",
+							"raw": "https://sso.mrtimeey.de/auth/realms/corona-attendance-report/protocol/openid-connect/token",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"sso",
+								"mrtimeey",
+								"de"
 							],
-							"port": "8088",
 							"path": [
 								"auth",
 								"realms",
@@ -118,7 +119,7 @@
 								},
 								{
 									"key": "client_secret",
-									"value": "7DL3bOou3eT7xvSQC81DtXAKN7F7C5hd",
+									"value": "l03y8IyJOYuNLyK923SiJspq95HRbzOH",
 									"type": "text"
 								},
 								{
@@ -134,12 +135,13 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8088/auth/realms/corona-attendance-report/protocol/openid-connect/token",
-							"protocol": "http",
+							"raw": "https://sso.mrtimeey.de/auth/realms/corona-attendance-report/protocol/openid-connect/token",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"sso",
+								"mrtimeey",
+								"de"
 							],
-							"port": "8088",
 							"path": [
 								"auth",
 								"realms",

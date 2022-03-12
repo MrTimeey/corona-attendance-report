@@ -1,13 +1,13 @@
 keycloak:
   realm: corona-attendance-report
-  auth-server-url: http://localhost:8088/auth
+  auth-server-url: https://sso.mrtimeey.de/auth
   ssl-required: external
   resource: corona-attendance-report-server
   use-resource-role-mappings: true
   bearer-only: true
   cors: true
   credentials:
-    secret: '{cipher}0e4119e89029a85cb07b7381c66f4008a9a5a1fcbee8557bb8110b0347adfdb5f4df906f00350de35d3f763f22c5ccb8304c6f6be17f620ebcd7c1d148f619ca'
+    secret: '{cipher}705553b50dde871ca1e9c32222c5e027666f5569ad2dd2112e093b7ef4b2d831edaaa979265fbf2b04e1411fdc662d543e94efb823042ee1a33b48a1fef93425'
 spring:
   data:
     mongodb:

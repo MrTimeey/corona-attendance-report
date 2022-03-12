@@ -59,37 +59,13 @@ export default {
         clientId: 'corona-attendance-report-frontend',
         endpoints: {
           configuration:
-            'http://localhost:8088/auth/realms/corona-attendance-report/.well-known/openid-configuration',
+            'https://sso.mrtimeey.de/auth/realms/corona-attendance-report/.well-known/openid-configuration',
         },
         responseType: 'code',
         grantType: 'authorization_code',
         scope: ['openid', 'profile', 'offline_access'],
         codeChallengeMethod: 'S256',
       },
-      keycloak: {
-        scheme: 'oauth2',
-        endpoints: {
-          authorization: '/auth/realms/corona-attendance-report/protocol/openid-connect/auth',
-          token: '/auth/realms/corona-attendance-report/protocol/openid-connect/token',
-          userInfo: '/auth/realms/corona-attendance-report/protocol/openid-connect/userinfo',
-          logout: '/auth/realms/corona-attendance-report/protocol/openid-connect/logout?redirect_uri=' + encodeURIComponent('http://localhost:3000')
-        },
-        token: {
-          property: 'access_token',
-          type: 'Bearer',
-          name: 'Authorization',
-          maxAge: 300
-        },
-        refreshToken: {
-          property: 'refresh_token',
-          maxAge: 60 * 60 * 24 * 30
-        },
-        responseType: 'code',
-        grantType: 'authorization_code',
-        clientId: 'corona-attendance-report-frontend',
-        scope: ['openid', 'profile', 'email'],
-        codeChallengeMethod: 'S256'
-      }
     },
   },
 
